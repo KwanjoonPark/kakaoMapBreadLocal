@@ -11,7 +11,8 @@
 </head>
 <body>
     <div id="search-box">
-        <input type="text" id="keyword" placeholder="검색어 입력"/>
+        <input type="text" id="keyword" placeholder="검색어 입력" autocomplete="off"/>
+        <div id="suggestions" style="border:1px solid #ccc; display:none; position:absolute; background:white; z-index:999;"></div>
         <button onclick="searchPlaces()">
             <img src="https://img.icons8.com/ios-glyphs/30/000000/search.png" alt="search" style="width: 22px;">
         </button>
@@ -25,6 +26,10 @@
         <button class="category-button" onclick="filterByCategory('빙수')">빙수</button>
     </div>
     <div id="map"/>
+
+    <script type="text/javascript" src="init.js"></script>
     <script type="text/javascript" src="search.js"></script>
+    <script type="text/javascript" src="gps.js"></script>
+    <script type="text/javascript" src="suggest.js"></script>
 </body>
 </html>

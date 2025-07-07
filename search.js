@@ -1,71 +1,44 @@
-var container = document.getElementById('map');
-var options = {
-    center: new kakao.maps.LatLng(36.37, 127.35), // KAIST
-    level: 3
-};
-var map = new kakao.maps.Map(container, options);
-var ps = new kakao.maps.services.Places();
-var markers = [];
+var infowindow = new kakao.maps.InfoWindow(); // 전역으로 하나만 생성
 
-// 검색 전에 지도 상태를 저장할 변수
-var savedCenter = map.getCenter();
-var savedLevel = map.getLevel();
-
-const catMarker = new kakao.maps.Marker({
-    map: map,
-    position: map.getCenter(), // 초기값
-    image: new kakao.maps.MarkerImage(
-        'icon/cat_brown.png', // 여기에 고양이 아이콘으로 변경 가능
-        new kakao.maps.Size(50,50),
-        { offset: new kakao.maps.Point(15, 15) }
-    )
-});
-
-function searchPlaces() {
+async function searchPlaces() {
     var keyword = document.getElementById('keyword').value.trim();
     if (!keyword) {
         alert('검색어를 입력해주세요!');
         return;
     }
 
-    // 검색 전 상태 저장
     savedCenter = map.getCenter();
     savedLevel = map.getLevel();
 
-   var searchOption = {
-      location: map.getCenter(),
-      radius: 15000               
-   };
+    try {
+        const response = await fetch('bakery_data_enriched.json'); // 로컬 JSON 파일
+        const json = await response.json();
+        const data = json.documents;
 
+        var matchedPlaces = data.filter(place =>
+            place.place_name.includes(keyword)
+        );
 
-    ps.keywordSearch(keyword, placesSearchCB, searchOption);
-}
+        clearMarkers();
 
+        if (matchedPlaces.length === 0) {
+            alert('검색된 장소 중 대전의 빵집이 없습니다.');
+            restorePreviousMapView();
+            return;
+        }
 
-function placesSearchCB(data, status) {
-    if (status !== kakao.maps.services.Status.OK) {
-        handleSearchError(status);
-        return;
-    }
+        var bounds = new kakao.maps.LatLngBounds();
+        matchedPlaces.forEach(place => {
+            var position = new kakao.maps.LatLng(place.y, place.x);
+            addMarker(position, place);
+            bounds.extend(position);
+        });
 
-    var bounds = new kakao.maps.LatLngBounds();
-    clearMarkers();
-
-    for (var i = 0; i < data.length; i++) {
-        var place = data[i];
-
-        if (!place.category_name.includes('제과,베이커리')) continue;
-        if (!place.address_name.includes('대전')) continue;
-
-        var position = new kakao.maps.LatLng(place.y, place.x);
-        addMarker(position);
-        bounds.extend(position);
-    }
-
-    if (markers.length > 0) {
         map.setBounds(bounds);
-    } else {
-        alert('검색된 장소 중 제과,베이커리에 해당하는 결과가 없습니다.');
+
+    } catch (error) {
+        console.error('JSON 로드 실패:', error);
+        alert('데이터를 불러오는 데 실패했습니다.');
         restorePreviousMapView();
     }
 }
@@ -75,10 +48,14 @@ function clearMarkers() {
     markers = [];
 }
 
-function addMarker(position) {
+function addMarker(position, place) {
     var marker = new kakao.maps.Marker({ position });
     marker.setMap(map);
     markers.push(marker);
+
+    kakao.maps.event.addListener(marker, 'click', function() {
+        showPlaceInfo(marker, place);
+    });
 }
 
 function restorePreviousMapView() {
@@ -86,33 +63,17 @@ function restorePreviousMapView() {
     map.setLevel(savedLevel);
 }
 
-function handleSearchError(status) {
-    if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        alert('검색 결과가 없습니다.');
-    } else {
-        alert('검색 중 오류가 발생했습니다.');
-    }
-    restorePreviousMapView();
-}
+function showPlaceInfo(marker, place) {
+    const breads = place.menu?.map(m => m.name).join(', ') || '등록된 메뉴 없음';
+    const opening = place.opening_hours?.map(o => `${o.day}: ${o.time}`).join('<br/>') || '운영시간 정보 없음';
 
-function updateUserLocation(position) {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-    const userLatLng = new kakao.maps.LatLng(lat, lng);
-
-    catMarker.setPosition(userLatLng);
-    map.setCenter(userLatLng); // 지도 중심도 이동시키고 싶으면 유지, 아니면 주석처리
-}
-
-function handleLocationError(error) {
-    console.error("위치 정보를 가져올 수 없습니다:", error);
-}
-
-if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(updateUserLocation, handleLocationError, {
-        enableHighAccuracy: true,
-        maximumAge: 0
-    });
-} else {
-    alert("GPS를 지원하지 않는 브라우저입니다.");
+    const content = `
+        <div style="padding:10px;min-width:250px;">
+            <strong>${place.place_name}</strong><br/>
+            주소: ${place.road_address_name || place.address_name}<br/>
+            전화: ${place.phone || '없음'}<br/>
+            <a href="${place.place_url}" target="_blank">상세보기</a>
+        </div>`;
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
 }
