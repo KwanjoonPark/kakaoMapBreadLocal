@@ -17,22 +17,27 @@ loadBakeryData();
 document.getElementById('keyword').addEventListener('input', function(e) {
     const input = e.target.value.trim();
     const suggestionsBox = document.getElementById('suggestions');
+    const categoryFilters = document.querySelector('.category-filters');
     suggestionsBox.innerHTML = '';
 
     if (input.length === 0) {
         suggestionsBox.style.display = 'none';
+        categoryFilters.style.display = 'block'; // 입력이 없으면 필터 다시 표시
         return;
     }
 
     const matched = bakeryData
         .filter(place => place.place_name.includes(input))
-        .slice(0, 5); // 최대 5개 추천
+        .slice(0, 5);
 
     if (matched.length === 0) {
         suggestionsBox.style.display = 'none';
+        categoryFilters.style.display = 'block'; // 추천어 없으면 필터 다시 표시
         return;
     }
 
+    // 추천어 있을 때는 필터 숨김
+    categoryFilters.style.display = 'none';
     matched.forEach(place => {
         const div = document.createElement('div');
         div.style.padding = '5px 10px';
@@ -41,15 +46,16 @@ document.getElementById('keyword').addEventListener('input', function(e) {
         div.addEventListener('click', function() {
             document.getElementById('keyword').value = place.place_name;
             suggestionsBox.style.display = 'none';
+            categoryFilters.style.display = 'block'; // 추천어 클릭 후 필터 다시 표시
             searchPlaces();
         });
         suggestionsBox.appendChild(div);
     });
 
-    // 추천어 박스 위치 조정 (검색창 아래)
     const rect = e.target.getBoundingClientRect();
     suggestionsBox.style.left = rect.left + 'px';
     suggestionsBox.style.top = (rect.bottom + window.scrollY) + 'px';
     suggestionsBox.style.width = rect.width + 'px';
     suggestionsBox.style.display = 'block';
 });
+

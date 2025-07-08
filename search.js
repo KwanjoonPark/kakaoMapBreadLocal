@@ -10,6 +10,12 @@ async function searchPlaces() {
     savedCenter = map.getCenter();
     savedLevel = map.getLevel();
 
+    // 추천어 상자 닫기
+    const suggestionsBox = document.getElementById('suggestions');
+    const categoryFilters = document.querySelector('.category-filters');
+    suggestionsBox.style.display = 'none';
+    categoryFilters.style.display = 'block'; // 필터 다시 표시
+
     try {
         const response = await fetch('bakery_data_enriched.json'); // 로컬 JSON 파일
         const json = await response.json();
@@ -35,6 +41,9 @@ async function searchPlaces() {
         });
 
         map.setBounds(bounds);
+        const center = map.getCenter();
+        const newCenter = new kakao.maps.LatLng(center.getLat() + 0.001, center.getLng());
+        map.setCenter(newCenter);
 
     } catch (error) {
         console.error('JSON 로드 실패:', error);
