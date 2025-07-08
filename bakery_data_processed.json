@@ -1,6 +1,19 @@
 {
     "documents": [
         {
+            "id": "630897360",
+            "place_name": "캘리포니아 카이스트점",
+            "address_name": "대전 유성구 구성동 23",
+            "road_address_name": "대전 유성구 대학로 291",
+            "x": "127.363731658052",
+            "y": "36.3701793978771",
+            "place_url": "http://place.map.kakao.com/630897360",
+            "phone": "042-350-0899",
+            "distance": "",
+            "menu": [],
+            "opening_hours": []
+        },
+        {
             "id": "22578406",
             "place_name": "카페켈리포니아",
             "address_name": "대전 유성구 봉명동 442-1",
@@ -9,9 +22,7 @@
             "y": "36.3561433158305",
             "place_url": "http://place.map.kakao.com/22578406",
             "phone": "042-825-2356",
-            "distance": "2170",
-            "menu": [],
-            "opening_hours": []
+            "distance": "2170"
         },
         {
             "id": "8561206",
