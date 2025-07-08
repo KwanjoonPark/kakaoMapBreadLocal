@@ -3,7 +3,7 @@ let bakeryData = []; // 전역에 JSON 데이터를 담을 변수
 // 초기화 시 JSON을 한 번만 불러와 메모리에 보관
 async function loadBakeryData() {
     try {
-        const response = await fetch('bakery_data_enriched.json');
+        const response = await fetch('bakery_data_processed.json');
         const json = await response.json();
         bakeryData = json.documents;
     } catch (error) {
