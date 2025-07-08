@@ -1,19 +1,9 @@
-// search.js
-
-// 카카오맵 초기화
-var mapContainer = document.getElementById('map');
-var mapOption = {
-    center: new kakao.maps.LatLng(36.3504, 127.3845), // 대전 중심좌표 예시
-    level: 5
-};
-var map = new kakao.maps.Map(mapContainer, mapOption);
-
 // 마커 배열
 var markers = [];
 
 // JSON 파일에서 데이터 불러오기
 function loadMarkers() {
-    fetch('data.json') // JSON 파일 경로 수정
+    fetch('bakery_data_processed.json') // JSON 파일 경로 수정
         .then(response => response.json())
         .then(data => {
             // 기존 마커 제거
@@ -24,11 +14,15 @@ function loadMarkers() {
                 var lat = parseFloat(place.y);
                 var lng = parseFloat(place.x);
                 var position = new kakao.maps.LatLng(lat, lng);
-
-                // 마커 생성
+                var imageSrc = 'marker_bread.png', // 마커이미지의 주소입니다    
+                    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                    imageOption = {offset: new kakao.maps.Point(27, 69)};
+                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+                
                 var marker = new kakao.maps.Marker({
                     map: map,
-                    position: position
+                    position: position,
+                    image : markerImage,
                 });
 
                 // 인포윈도우 내용
