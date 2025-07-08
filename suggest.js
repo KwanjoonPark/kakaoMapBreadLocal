@@ -22,7 +22,7 @@ document.getElementById('keyword').addEventListener('input', function(e) {
 
     if (input.length === 0) {
         suggestionsBox.style.display = 'none';
-        categoryFilters.style.display = 'block'; // 입력이 없으면 필터 다시 표시
+        categoryFilters.style.display = 'block'; // 입력이 없으면 필터 다시 표시522d1 (update_my_position_button)
         return;
     }
 
@@ -52,10 +52,10 @@ document.getElementById('keyword').addEventListener('input', function(e) {
         suggestionsBox.appendChild(div);
     });
 
+    // 추천어 박스 위치 조정 (검색창 아래)
     const rect = e.target.getBoundingClientRect();
     suggestionsBox.style.left = rect.left + 'px';
     suggestionsBox.style.top = (rect.bottom + window.scrollY) + 'px';
     suggestionsBox.style.width = rect.width + 'px';
     suggestionsBox.style.display = 'block';
 });
-

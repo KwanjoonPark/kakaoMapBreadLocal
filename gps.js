@@ -11,11 +11,13 @@ function handleLocationError(error) {
     console.error("위치 정보를 가져올 수 없습니다:", error);
 }
 
-if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(updateUserLocation, handleLocationError, {
-        enableHighAccuracy: true,
-        maximumAge: 0
-    });
-} else {
-    alert("GPS를 지원하지 않는 브라우저입니다.");
+function resetToUserLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(updateUserLocation, handleLocationError, {
+            enableHighAccuracy: false,
+            maximumAge: 0
+        });
+    } else {
+        alert("GPS를 지원하지 않는 브라우저입니다.");
+    }
 }

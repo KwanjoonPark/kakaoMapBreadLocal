@@ -16,13 +16,26 @@
         {
             "id": "22578406",
             "place_name": "카페켈리포니아",
+            "y": "36.3561433158305",
+            "place_url": "http://place.map.kakao.com/22578406",
+            "phone": "042-825-2356",
+            "distance": "2170",
+            "menu": [],
+            "opening_hours": []
+
+        },
+        {
+            "id": "22578406",
+            "place_name": "카페켈리포니아",
             "address_name": "대전 유성구 봉명동 442-1",
             "road_address_name": "대전 유성구 온천서로 22",
             "x": "127.339963469793",
             "y": "36.3561433158305",
             "place_url": "http://place.map.kakao.com/22578406",
             "phone": "042-825-2356",
-            "distance": "2170"
+            "distance": "2170",
+            "menu": [],
+            "opening_hours": []
         },
         {
             "id": "8561206",
