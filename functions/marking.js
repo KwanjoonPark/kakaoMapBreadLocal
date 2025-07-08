@@ -10,7 +10,7 @@ function loadMarkers(filteredIDs = null) {
             markers.forEach(marker => marker.setMap(null));
             markers = [];
 
-            data.documents.forEach(place => {
+            data.documents.forEach( place => {
                 if(!filteredIDs || filteredIDs.includes(place.id)) {
                     var lat = parseFloat(place.y);
                     var lng = parseFloat(place.x);
@@ -37,6 +37,7 @@ function loadMarkers(filteredIDs = null) {
                     // 클릭 시 인포윈도우 열기
                     kakao.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
+                        onMarkerClick(place.id); 
                     });
 
                     markers.push(marker);
@@ -46,5 +47,10 @@ function loadMarkers(filteredIDs = null) {
         .catch(error => console.error('Error loading JSON:', error));
 }
 
+window.flutter_inappwebview = window.flutter_inappwebview || {};
+function onMarkerClick(markerId) {
+    window.flutter_inappwebview.callHandler('markerClicked', markerId);
+    console.log(`Marker with ID ${markerId} clicked`);
+}
 // 페이지 로딩 시 실행
 loadMarkers();
