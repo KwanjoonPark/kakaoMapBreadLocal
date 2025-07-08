@@ -17,7 +17,7 @@ async function searchPlaces() {
     categoryFilters.style.display = 'block'; // 필터 다시 표시
 
     try {
-        const response = await fetch('bakery_data_processed.json'); 
+        const response = await fetch('data/bakery_data_processed.json'); 
         const json = await response.json();
         const data = json.documents;
 

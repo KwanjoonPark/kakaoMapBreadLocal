@@ -3,7 +3,7 @@ var markers = [];
 
 // JSON 파일에서 데이터 불러오기
 function loadMarkers() {
-    fetch('bakery_data_processed.json') // JSON 파일 경로 수정
+    fetch('data/bakery_data_processed.json') // JSON 파일 경로 수정
         .then(response => response.json())
         .then(data => {
             // 기존 마커 제거
@@ -14,7 +14,7 @@ function loadMarkers() {
                 var lat = parseFloat(place.y);
                 var lng = parseFloat(place.x);
                 var position = new kakao.maps.LatLng(lat, lng);
-                var imageSrc = 'marker_bread.png', // 마커이미지의 주소입니다    
+                var imageSrc = 'icon/marker_bread.png', // 마커이미지의 주소입니다    
                     imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
                     imageOption = {offset: new kakao.maps.Point(27, 69)};
                 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
