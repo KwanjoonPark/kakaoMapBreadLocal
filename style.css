@@ -73,7 +73,7 @@
    transition: background-color 0.2s, transform 0.1s;
  }
  .category-button:hover {
-   background-color: #E0E0E0;
+   background-color: #f8d880;
    transform: translateY(-2px);
  }
 .category-button.active {
