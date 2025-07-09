@@ -86,10 +86,6 @@
    background-color: #F5F5F5;    /* 연녹색 계열 */
    color: #333;
  }
- 
- .category-button.matcha:hover {
-   background-color: #8FB49A;
- }
  .category-button.matcha.active {
    background-color: #40b363;
  }
@@ -98,9 +94,6 @@
    color: #333;
  }
  
- .category-button.ice:hover {
-   background-color: #81bdc8;
- }
  .category-button.ice.active {
    background-color: #3791c5;
  }
