@@ -81,6 +81,7 @@
    background-color: #f5c542; /* 예: 베이지 계열 강조 색 */
    color: #454545;
  }
+ 
  .category-button.matcha {
    background-color: #F5F5F5;    /* 연녹색 계열 */
    color: #333;
@@ -91,4 +92,15 @@
  }
  .category-button.matcha.active {
    background-color: #40b363;
+ }
+ .category-button.ice {
+   background-color: #F5F5F5;    /* 연녹색 계열 */
+   color: #333;
+ }
+ 
+ .category-button.ice:hover {
+   background-color: #81bdc8;
+ }
+ .category-button.ice.active {
+   background-color: #3791c5;
  }
