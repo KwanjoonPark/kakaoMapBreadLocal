@@ -97,3 +97,13 @@
  .category-button.ice.active {
    background-color: #3791c5;
  }
+ .category-button.matcha:hover {
+   background-color: #a8e6a3;            /* 텍스트를 흰색으로 */
+   transform: translateY(-2px);
+ }
+ 
+ /* ice 버튼 호버 */
+ .category-button.ice:hover {
+   background-color: #8ecff3;  /* 연한 파랑 → 살짝 진해진 파랑 */
+   transform: translateY(-2px);
+ }
