@@ -60,16 +60,35 @@
 }
 
 .category-button {
-   border: 1px solid #FCEAD9;
-   background: #FCEAD9;
-   padding: 8px 15px;
-   border-radius: 25px;
-   font-size: 12px;
+   flex: 1 1 auto;
+   min-width: 80px;
+   padding: 8px 12px;
+   font-size: 14px;
+   font-weight: 500;
+   border: none;
+   border-radius: 20px;
+   background-color: #F5F5F5;
+   color: #333;
    cursor: pointer;
-   transition: background-color 0.3s, color 0.3s;
-   margin: 5px;
-}
+   transition: background-color 0.2s, transform 0.1s;
+ }
+ .category-button:hover {
+   background-color: #E0E0E0;
+   transform: translateY(-2px);
+ }
 .category-button.active {
+   transform: translateY(0);
    background-color: #f5c542; /* 예: 베이지 계열 강조 색 */
-   color: white;
+   color: #454545;
+ }
+ .category-button.matcha {
+   background-color: #F5F5F5;    /* 연녹색 계열 */
+   color: #333;
+ }
+ 
+ .category-button.matcha:hover {
+   background-color: #8FB49A;
+ }
+ .category-button.matcha.active {
+   background-color: #40b363;
  }

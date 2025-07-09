@@ -51,7 +51,7 @@ window.flutter_inappwebview = window.flutter_inappwebview || {};
 console.log(window.flutter_inappwebview);
 
 function onMarkerClick(markerId) {
-    window.flutter_inappwebview.postMessage('markerClicked', markerId);
+    window.flutter_inappwebview.callHandler('markerClicked', markerId);
     console.log(`Marker with ID ${markerId} clicked`);
 }
 // 페이지 로딩 시 실행
